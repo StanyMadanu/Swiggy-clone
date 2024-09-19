@@ -1,7 +1,9 @@
 import React from "react";
 import { CDN_URL } from "../utils/constants";
 
-const CategoryItems = ({ items }) => {
+const CategoryItems = ({ items, dummy }) => {
+  console.log(dummy);
+
   return (
     <div className="p-5 bg-slate-50 mb-3">
       {items?.map((itemDish) => (

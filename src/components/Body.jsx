@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import RestuarentCard, { Promoted } from "./RestuarentCard";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import { ALL_RESTAURENTS } from "../utils/constants";
+import UserContext from "../utils/UserContext";
 
 const Body = () => {
   const [topRatingRes, setTopRatingRes] = useState([]);
@@ -10,6 +11,8 @@ const Body = () => {
   const [searchText, setSearchText] = useState("");
 
   const PromotedCard = Promoted(RestuarentCard);
+
+  const { loginUser, setUserName } = useContext(UserContext);
 
   useEffect(() => {
     fetchData();
@@ -68,6 +71,15 @@ const Body = () => {
         >
           Top Rating Restuarant
         </button>
+
+        <label htmlFor="user">UserName:</label>
+        <input
+          id="user"
+          type="text"
+          className="border px-2"
+          value={loginUser}
+          onChange={(e) => setUserName(e.target.value)}
+        />
       </div>
 
       <div className="flex gap-5 flex-wrap">

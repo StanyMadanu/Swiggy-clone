@@ -1,9 +1,13 @@
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import useRestaurentMenu from "../utils/useRestaurentMenu";
 import RestaurantCategory from "./RestaurantCategory";
 
 const RestaurentMenu = () => {
+  const [showIndex, setShowIndex] = useState(null);
   const { resID } = useParams();
+
+  const dummy = "dummy data";
 
   const recommendedResInfo = useRestaurentMenu(resID);
 
@@ -16,7 +20,9 @@ const RestaurentMenu = () => {
         "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
     );
 
-  console.log({ recommendedResInfo });
+  const handleSetShowIndex = (index) => {
+    setShowIndex(index === showIndex ? null : index);
+  };
 
   return (
     <>
@@ -25,10 +31,13 @@ const RestaurentMenu = () => {
           <h1 className="text-4xl font-bold mb-5">{RestaurantName}</h1>
         </div>
 
-        {categories?.map((category) => (
+        {categories?.map((category, index) => (
           <RestaurantCategory
             key={category?.card.card.title}
             data={category?.card?.card}
+            showItems={index === showIndex ? true : false}
+            setShowIndex={() => handleSetShowIndex(index)}
+            dummy={dummy}
           />
         ))}
       </section>
